@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TikTok Login - Copy Your Code</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }
+    #code { font-size: 1.4em; font-weight: bold; padding: 16px; background: #f0f0f0; border-radius: 8px; word-break: break-all; user-select: all; }
+    button { margin-top: 16px; padding: 10px 20px; font-size: 1em; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>TikTok login complete</h1>
+  <p>Copy the code below and paste it back into the script on your Mac:</p>
+  <div id="code">(reading code from URL...)</div>
+  <button onclick="copyCode()">Copy to clipboard</button>
+  <p id="copied" style="color: green; display: none;">Copied!</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const error = params.get('error');
+    const codeEl = document.getElementById('code');
+
+    if (code) {
+      codeEl.textContent = code;
+    } else if (error) {
+      codeEl.textContent = 'Error: ' + error + ' - ' + (params.get('error_description') || '');
+      codeEl.style.color = 'red';
+    } else {
+      codeEl.textContent = 'No code found in URL - something went wrong.';
+      codeEl.style.color = 'red';
+    }
+
+    function copyCode() {
+      navigator.clipboard.writeText(codeEl.textContent).then(() => {
+        document.getElementById('copied').style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>
